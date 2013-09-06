@@ -18,8 +18,6 @@ exports.socket = function (io) {
   	socket.on('turnOff', function (data) {
   		  });
   
-  });
-
   setInterval(function() {     
         temp.getTemp(function(value){
             currentTemp = value;
@@ -27,4 +25,8 @@ exports.socket = function (io) {
        });
 
     }, 10000); 
+
+  });
+
+  
 }
