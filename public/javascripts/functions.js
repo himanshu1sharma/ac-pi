@@ -9,6 +9,7 @@ var socket = io.connect('http://localhost');
 socket.on('state', function(data){
     (data.state == 1 ? $('#led').val('on').slider("refresh") : $('#led').val('off').slider("refresh"));
     $('#setTemp').val(data.temp).slider("refresh");
+    $('#led').slider("disable");
 });
 
 socket.on('currentTemp', function (data) {
@@ -19,10 +20,10 @@ $('#done').click(function() {
     setTemp = $('#setTemp').val();
     socket.emit('changeTemp',setTemp);   
     });
-
+/*
 $('select#led').change(function() {
     value = $("#led").val();
-    $('#led').val('on').slider("disable");
+    //$('#led').val('on').slider("disable");
     if(value == "on"){
         socket.emit('turnOn');
     }
@@ -31,5 +32,13 @@ $('select#led').change(function() {
     }
 
     });
-    
+  */
+
+  $('#turnOn').click(function() {
+            socket.emit('turnOn');
+    });
+
+    $('#turnOff').click(function() {
+            socket.emit('turnOff');
+    });  
 });

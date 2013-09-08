@@ -2,18 +2,28 @@ extends layout
 
 block content
 	#page(data-role='page')
-		div
-			|Current Temperature
-		div#temp.tempBlock
-			|0
-		div(data-role="fieldcontain")
-			label(for="setTemp")
-				|Cutoff Temp
-			input#setTemp(type="range",name="setTemp",value="30",min="20",max="30")
-		a#done(href="#",data-role="button",data-icon="check",data-inline="true")
-			| Done
-		div(style="margin-left: 12%")
+		div(data-role="header")
+			h1|Air Conditioning App
+		h2|Current Temperature
+		div(style="float:right;")
 			select#led(name='led', data-role='slider')
 				option(value='off') Off
-				option(value='on') On	
-		
+				option(value='on') On
+		div#temp.tempBlock
+			|0
+		br	
+		div(data-role="collapsible",data-collapsed="false")
+			h3|Temperature config
+			div(data-role="fieldcontain")
+				label(for="setTemp")
+					|Cutoff Temp
+				input#setTemp(type="range",name="setTemp",value="30",min="20",max="30")
+			a#done(href="#",data-role="button",data-icon="check",data-inline="true")
+				| Done
+		div(data-role="collapsible",data-collapsed="false")
+			h3|AC Control
+			a#turnOn(href="#",data-role="button",data-icon="check",data-inline="true")
+				| On
+			a#turnOff(href="#",data-role="button",data-icon="delete",data-inline="true")
+				| Off
+	
