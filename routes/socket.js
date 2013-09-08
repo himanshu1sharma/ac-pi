@@ -1,7 +1,38 @@
 var fs = require('fs');
 var servo = require('servo');
 var currentTemp;
+var acState = {};
 
+fs.readFile("pinstate.json", 'utf8', function (err, data) {
+  if (err) {
+    console.log('Error: ' + err);
+    return;
+  }
+  data = JSON.parse(data);
+  acState = data;
+  console.log(JSON.stringify(data));
+});
+
+function setState(value){
+  acState.state = value;
+  fs.writeFile("pinstate.json", JSON.stringify(acState), function(err) {
+            if(err) {
+                console.log(err);
+          } else {
+          }
+        }); 
+}
+
+function setTemp(t){
+  acState.temp = t;
+  fs.writeFile("pinstate.json", JSON.stringify(acState), function(err) {
+            if(err) {
+                console.log(err);
+          } else {
+          }
+        }); 
+
+}
 
 function getTemperature(callback) {
 
@@ -26,12 +57,26 @@ exports.socket = function (io) {
               socket.emit('currentTemp',currentTemp); 
           });
     
+    socket.emit('state',acState);
+
+    socket.on('changeTemp', function () {      
+        socketTemp(t);
+        socket.emit('state',acState);
+         socket.broadcast.emit('state',acState);
+      });
+
   	socket.on('turnOn', function () { 	   
         servo.turnOn(); 
+        setState(1);
+        socket.emit('state',acState);
+         socket.broadcast.emit('state',acState);
       });
 
   	socket.on('turnOff', function () {
       servo.turnOff(); 
+      setState(0);
+      socket.emit('state',acState);
+      socket.broadcast.emit('state',acState);
   		  });
   
   setInterval(function() {     
