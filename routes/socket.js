@@ -25,11 +25,11 @@ exports.socket = function (io) {
   setInterval(function() {     
         temp.getTemp(function(value){ 
             if(typeof value != 'undefined' && value != currentTemp)
-                socket.emit('currentTemp',value);            
+                socket.broadcast.emit('currentTemp',value);            
             currentTemp = value;
        });
 
-    }, 10000); 
+    }, 60000); 
 
   });
 
