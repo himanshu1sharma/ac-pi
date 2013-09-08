@@ -15,11 +15,11 @@ exports.socket = function (io) {
     servo.init();
 
   	socket.on('turnOn', function () { 	   
-        servo.turnOn; 
+        servo.turnOn(); 
       });
 
   	socket.on('turnOff', function () {
-      servo.turnOff; 
+      servo.turnOff(); 
   		  });
   
   setInterval(function() {     

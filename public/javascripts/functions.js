@@ -5,7 +5,7 @@ $(document).ready(function() {
 var socket = io.connect('http://localhost');
 
 socket.on('currentTemp', function (data) {
-                $('#temp').html() = data;
+                $('#temp').html(data);
                 console.log(data);
 });
 
