@@ -19,6 +19,8 @@ socket.on('currentTemp', function (data) {
 $('#done').click(function() {
     setTemp = $('#setTemp').val();
     socket.emit('changeTemp',setTemp);   
+    $(this).addClass('ui-disabled');
+
     });
 /*
 $('select#led').change(function() {
@@ -33,6 +35,11 @@ $('select#led').change(function() {
 
     });
   */
+
+  $('#setTemp').change(function() {
+    $('#done').removeClass('ui-disabled');
+  });
+
 
   $('#turnOn').click(function() {
             socket.emit('turnOn');
