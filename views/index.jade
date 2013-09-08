@@ -2,9 +2,17 @@ extends layout
 
 block content
 	#page(data-role='page')
+		div
+			|Current Temperature
 		div#temp.tempBlock
 			|0
-		span(style="margin-left: 12%")
+		div(data-role="fieldcontain")
+			label(for="setTemp")
+				|Cutoff Temp
+			input#setTemp(type="range",name="setTemp",value="30",min="20",max="30")
+		a#done(href="#",data-role="button",data-icon="check",data-inline="true")
+			| Done
+		div(style="margin-left: 12%")
 			select#led(name='led', data-role='slider')
 				option(value='off') Off
 				option(value='on') On	

@@ -18,7 +18,6 @@ function setState(value){
   fs.writeFile("pinstate.json", JSON.stringify(acState), function(err) {
             if(err) {
                 console.log(err);
-          } else {
           }
         }); 
 }
@@ -28,7 +27,6 @@ function setTemp(t){
   fs.writeFile("pinstate.json", JSON.stringify(acState), function(err) {
             if(err) {
                 console.log(err);
-          } else {
           }
         }); 
 
@@ -59,10 +57,10 @@ exports.socket = function (io) {
     
     socket.emit('state',acState);
 
-    socket.on('changeTemp', function () {      
-        socketTemp(t);
+    socket.on('changeTemp', function (t) {      
+        setTemp(t);
         socket.emit('state',acState);
-         socket.broadcast.emit('state',acState);
+        socket.broadcast.emit('state',acState);
       });
 
   	socket.on('turnOn', function () { 	   
@@ -92,5 +90,4 @@ exports.socket = function (io) {
 
   });
 
-  
 }

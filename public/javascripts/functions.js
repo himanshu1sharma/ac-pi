@@ -8,14 +8,19 @@ $(document).ready(function() {
 var socket = io.connect('http://localhost');
 
 socket.on('state', function(data){
-    console.log('STATE');
-    console.log(data);
+    (data.state == 1 ? $('#led').val('on').slider("refresh") : $('#led').val('off').slider("refresh"));
+    $('#setTemp').val(data.temp).slider("refresh");
 });
 
 socket.on('currentTemp', function (data) {
                 $('#temp').html(data);
-                console.log(data);
 });
+
+$('#done').click(function() {
+    setTemp = $('#setTemp').val();
+    socket.emit('changeTemp',setTemp);
+   
+    });
 
 $('#forward').mousedown(function() {
     socket.emit('turnOn', { pin:11 });
