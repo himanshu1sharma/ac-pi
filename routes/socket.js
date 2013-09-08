@@ -72,35 +72,18 @@ exports.socket = function (io) {
         socket.broadcast.emit('state',acState);
       });
 
-  	socket.on('turnOn', function () { 	
-        setDisabled(true);
+  	socket.on('turnOn', function () { 	   
+        servo.turnOn(); 
         setState(1);
         socket.emit('state',acState);
         socket.broadcast.emit('state',acState);
-
-        setTimeout(function(){
-          servo.turnOn();
-          setDisabled(false);
-          socket.emit('state',acState);
-          socket.broadcast.emit('state',acState);
-        },5000);
-        
       });
 
   	socket.on('turnOff', function () {
-
-       setDisabled(true);
-        setState(0);
-        socket.emit('state',acState);
-        socket.broadcast.emit('state',acState);
-
-      setTimeout(function(){
-          servo.turnOn();
-          setDisabled(false);
-          socket.emit('state',acState);
-          socket.broadcast.emit('state',acState);
-        },5000);
-
+      servo.turnOff(); 
+      setState(0);
+      socket.emit('state',acState);
+      socket.broadcast.emit('state',acState);
   		  });
   
   setInterval(function() {     
