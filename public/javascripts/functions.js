@@ -1,11 +1,10 @@
 
 $(document).ready(function() {
 
-var socket = io.connect('http://localhost');
+var socket = io.connect('http://app.himanshusharma.info');
 
 socket.on('currentTemp', function (data) {
     console.log(data);
-    $("p").text(data);
 });
 
 $('#forward').mousedown(function() {
