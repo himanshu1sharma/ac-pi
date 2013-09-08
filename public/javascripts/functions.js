@@ -10,6 +10,11 @@ var socket = io.connect('http://localhost');
 socket.on('state', function(data){
     (data.state == 1 ? $('#led').val('on').slider("refresh") : $('#led').val('off').slider("refresh"));
     $('#setTemp').val(data.temp).slider("refresh");
+    $('#led').val('on').slider("enable");
+
+    if(data.disable == true)
+        $('#led').val('on').slider("disable");
+
 });
 
 socket.on('currentTemp', function (data) {
@@ -22,14 +27,10 @@ $('#done').click(function() {
    
     });
 
-$('#forward').mousedown(function() {
-    socket.emit('turnOn', { pin:11 });
-   
-    });
-
 $('select#led').change(function() {
     value = $("#led").val();
-    if(value== "on"){
+    $('#led').val('on').slider("disable");
+    if(value == "on"){
         socket.emit('turnOn');
     }
     else {

@@ -22,6 +22,15 @@ function setState(value){
         }); 
 }
 
+function setDisabled(value){
+  acState.disabled = value;
+  fs.writeFile("pinstate.json", JSON.stringify(acState), function(err) {
+            if(err) {
+                console.log(err);
+          }
+        }); 
+}
+
 function setTemp(t){
   acState.temp = t;
   fs.writeFile("pinstate.json", JSON.stringify(acState), function(err) {
@@ -63,18 +72,35 @@ exports.socket = function (io) {
         socket.broadcast.emit('state',acState);
       });
 
-  	socket.on('turnOn', function () { 	   
-        servo.turnOn(); 
+  	socket.on('turnOn', function () { 	
+        setDisabled(true);
         setState(1);
         socket.emit('state',acState);
-         socket.broadcast.emit('state',acState);
+        socket.broadcast.emit('state',acState);
+
+        setTimeout(function(){
+          servo.turnOn();
+          setDisabled(false);
+          socket.emit('state',acState);
+          socket.broadcast.emit('state',acState);
+        },5000);
+        
       });
 
   	socket.on('turnOff', function () {
-      servo.turnOff(); 
-      setState(0);
-      socket.emit('state',acState);
-      socket.broadcast.emit('state',acState);
+
+       setDisabled(true);
+        setState(0);
+        socket.emit('state',acState);
+        socket.broadcast.emit('state',acState);
+
+      setTimeout(function(){
+          servo.turnOn();
+          setDisabled(false);
+          socket.emit('state',acState);
+          socket.broadcast.emit('state',acState);
+        },5000);
+
   		  });
   
   setInterval(function() {     
