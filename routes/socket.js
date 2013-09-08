@@ -1,5 +1,6 @@
 var fs = require('fs');
 var temp = require('temperature');
+var servo = require('servo');
 var currentTemp;
 
 
@@ -11,10 +12,14 @@ exports.socket = function (io) {
             currentTemp = value;
        });
 
-  	socket.on('turnOn', function (data) { 	   
-       });
+    servo.init();
 
-  	socket.on('turnOff', function (data) {
+  	socket.on('turnOn', function () { 	   
+        servo.turnOn; 
+      });
+
+  	socket.on('turnOff', function () {
+      servo.turnOff; 
   		  });
   
   setInterval(function() {     

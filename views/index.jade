@@ -2,19 +2,10 @@ extends layout
 
 block content
 	#page(data-role='page')
-		div
-			p
-				0
-		div(style="margin-left: 80px;")
-			a#forward(href='#', data-role='button', data-inline='true', data-theme='b') Forward
-		br
-		div
-			a#left(href='#', data-role='button', data-inline='true', data-theme='b') Left
-			span(style="margin-left: 20px;margin-right: 20px;")
-				select#led(name='led', data-role='slider')
-					option(value='off') Off
-					option(value='on') On	
-			a#right(href='#', data-role='button', data-inline='true', data-theme='b') Right
-		br
-		div(style="margin-left: 94px;")
-			a#back(href='#', data-role='button', data-inline='true', data-theme='b') Back
+		div#temp
+			|0
+		span(style="margin-left: 20px;margin-right: 20px;")
+			select#led(name='led', data-role='slider')
+				option(value='off') Off
+				option(value='on') On	
+		
