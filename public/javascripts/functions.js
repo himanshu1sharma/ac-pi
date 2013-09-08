@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
 
-//var socket = io.connect('http://app.himanshusharma.info');
-var socket = io.connect('http://localhost');
+var socket = io.connect('http://app.himanshusharma.info');
+//var socket = io.connect('http://localhost');
 
 socket.on('currentTemp', function (data) {
                 $('#temp').html(data);

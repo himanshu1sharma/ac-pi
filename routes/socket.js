@@ -8,11 +8,13 @@ exports.socket = function (io) {
   io.sockets.on('connection', function(socket) {
 
     //Init the pin
-    temp.getTemp(function(value){
-            currentTemp = value;
-       });
-
+    temp.init();
     servo.init();
+
+    temp.getTemp(function(value){ 
+      currentTemp = value;
+    });
+    socket.emit('currentTemp',currentTemp);
 
   	socket.on('turnOn', function () { 	   
         servo.turnOn(); 
