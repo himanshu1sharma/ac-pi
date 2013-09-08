@@ -7,6 +7,8 @@ var express = require('express')
   , routes = require('./routes')
   , path = require('path');
 
+var temp = require('temperature');
+var currentTemp;
 var app = express();
 
 app.configure(function(){
@@ -27,5 +29,33 @@ var socket = require('./routes/socket');
 var io = require('socket.io').listen(server,{ log: false });
 
 app.get('/', routes.index);
+
+console.log('Intialising Temperature module');
+  temp.init();
+  temp.getTemp(function(value){
+     if(typeof value != 'undefined' && value != null){
+                writeTemperature(value);         
+              }   
+      });
+
+  setInterval(function() {     
+    console.log('Getting temperature');
+        temp.getTemp(function(value){ 
+            if(typeof value != 'undefined' && value != null){
+                writeTemperature(value);        
+              }  
+       });
+
+    }, 60000); 
+
+   
+function writeTemperature(value) {
+
+    fs.writeFile('temperature',data, function(err) {
+            if(err) {
+                console.log(err);
+          }
+        }); 
+}
 
 socket.socket(io);
