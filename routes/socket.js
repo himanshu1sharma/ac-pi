@@ -10,16 +10,21 @@ exports.socket = function (io) {
     //Init the pin
     temp.init();
     servo.init();
-
-  while (currentTemp!=null)
-    {
+    currentTemp = null; 
         temp.getTemp(function(value){ 
             currentTemp = value;
+            if(currentTemp ! = null){
+              console.log('Emitting first')
+            socket.emit('currentTemp',currentTemp);
+          } else {
+              temp.getTemp(function(value){ 
+              currentTemp = value;
+              console.log('Emitting first')
+              socket.emit('currentTemp',currentTemp);
+            });
+          }            
         });
-    }
     
-    socket.emit('currentTemp',currentTemp);
-
   	socket.on('turnOn', function () { 	   
         servo.turnOn(); 
       });
@@ -30,8 +35,10 @@ exports.socket = function (io) {
   
   setInterval(function() {     
         temp.getTemp(function(value){ 
-            if(typeof value != 'undefined' && value != currentTemp)
-                socket.broadcast.emit('currentTemp',value);            
+            if(typeof value != 'undefined' && value != currentTemp){
+                socket.emit('currentTemp',value);
+                socket.broadcast.emit('currentTemp',value);         
+              }   
             currentTemp = value;
        });
 
