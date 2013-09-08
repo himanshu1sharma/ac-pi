@@ -11,9 +11,13 @@ exports.socket = function (io) {
     temp.init();
     servo.init();
 
-    temp.getTemp(function(value){ 
-      currentTemp = value;
-    });
+  while (currentTemp!=null)
+    {
+        temp.getTemp(function(value){ 
+            currentTemp = value;
+        });
+    }
+    
     socket.emit('currentTemp',currentTemp);
 
   	socket.on('turnOn', function () { 	   
