@@ -2,9 +2,10 @@
 $(document).ready(function() {
 
 var socket = io.connect('http://app.himanshusharma.info');
+//var socket = io.connect('http://localhost');
 
 socket.on('currentTemp', function (data) {
-    console.log(data);
+                console.log(data);
 });
 
 $('#forward').mousedown(function() {

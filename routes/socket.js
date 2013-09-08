@@ -20,8 +20,7 @@ exports.socket = function (io) {
   setInterval(function() {     
         temp.getTemp(function(value){ 
             if(typeof value != 'undefined' && value != currentTemp)
-                socket.broadcast.emit('currentTemp', {currentTemp : value});
-            
+                socket.emit('currentTemp',value);            
             currentTemp = value;
        });
 
