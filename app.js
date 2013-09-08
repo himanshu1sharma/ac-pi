@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , path = require('path');
 
+var fs = require('fs');
 var temp = require('temperature');
 var currentTemp;
 var app = express();
@@ -51,7 +52,7 @@ console.log('Intialising Temperature module');
    
 function writeTemperature(value) {
 
-    fs.writeFile('temperature',data, function(err) {
+    fs.writeFile('temperature',value, function(err) {
             if(err) {
                 console.log(err);
           }

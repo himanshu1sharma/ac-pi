@@ -5,7 +5,7 @@ var currentTemp;
 
 function getTemperature(callback) {
 
-fs.readFile('temperature', function (err, data) {
+fs.readFile('temperature','utf-8', function (err, data) {
   if (err) {
     console.log('Error: ' + err);
     return;
